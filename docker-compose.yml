@@ -1,8 +1,4 @@
 version: '3'
-volumes:
-  # We'll define a volume that will store the data from the mysql databases:
-  mysql-data:
-    driver: local
 services:
   mysqldb:
     image: mysql
@@ -12,8 +8,6 @@ services:
       MYSQL_DATABASE: jackhammer_production
     ports:
       - "3306:3306"
-    volumes: 
-       - mysql-data:/usr/local/bin/mysql
     restart: always
     healthcheck:
       test: "nc -z localhost 3306"
