@@ -101,7 +101,7 @@ sh ./docker-build.sh SingleUser
 do signup for access
 
 ## Restarting Jackhammer
-
+__Caution: This operation removes all data.__
 ```
 docker-compose stop
 docker-compose rm
