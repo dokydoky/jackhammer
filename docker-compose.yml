@@ -9,10 +9,6 @@ services:
     ports:
       - "3306:3306"
     restart: always
-    healthcheck:
-      test: "nc -z localhost 3306"
-      interval: 1s
-      retries: 120
   web:
     build: ./web
     volumes:
