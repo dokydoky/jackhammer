@@ -8,7 +8,6 @@ services:
       MYSQL_DATABASE: jackhammer_production
     ports:
       - "3306:3306"
-    restart: always
   web:
     build: ./web
     volumes:
