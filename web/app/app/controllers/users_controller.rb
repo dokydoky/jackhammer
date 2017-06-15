@@ -43,7 +43,7 @@ class UsersController < ApplicationController
 		end
 		@user.update(is_team_lead?: @is_team_lead,name: params[:user][:name],is_admin?: @is_admin,is_security_member?: @is_security_member)
 		@user.repo_ids = params[:user][:repo_ids].select { |repo| repo.present? } if params[:user][:repo_ids].present?
-		@user.role_ids = params[:user][:role_ids].select { |role| role.present? } if params[:user][:role_ids].present?
+		@user.role_ids = params[:user][:role_ids] if params[:user][:role_ids].present?
 		selected_teams = params[:user][:team_ids].reject(&:blank?)
 		if selected_teams.present?
 			@user.team_ids = selected_teams

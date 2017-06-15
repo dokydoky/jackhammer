@@ -26,9 +26,9 @@
 		</div>
 		<div class="form-group row">
 			<div class='col-md-6'>
-					<%prompt = 'select role'%>
-				<%=f.label :role,class: 'label-class'%>
-				<%= f.select :role_ids, options_for_select(Role.all.order(:name).collect { |t| [t.name,t.id]}.unshift(prompt), selected: prompt, disabled: prompt),{},{:class=> "form-control",'data-live-search'=>"true",'data-show-subtext'=> "true",'data-size'=>"5"}%>
+			<%= f.label :role,class: 'label-class'%>
+			<%= f.select(:role_ids, Role.all.order(:name).collect { |t| [t.name, t.id] }, {:include_blank => "select role"}, {:class=>"form-control", 'data-live-search'=>"true", 'data-show-subtext'=>"true", 'data-size' => "5"} )%>
+
 			</div>
 		</div>
 
@@ -36,14 +36,14 @@
 			<div class='col-md-6'>
 				<div class="checkbox checkbox-slider--b-flat">
 					<label>
-						<%=f.check_box :is_team_lead?,class: 'user-role' %><span class='label-class'>Is Team Lead?</span>
+						<%= f.check_box :is_team_lead?,class: 'user-role' %><span class='label-class'>Is Team Lead?</span>
 					</label>
 				</div>                  
 			</div>
 			<div class='col-md-6'>
 				<div class="checkbox checkbox-slider--b-flat">
 					<label>
-						<%=f.check_box :is_admin?,class: 'user-role' %><span class='label-class'>Is Admin?</span>
+						<%= f.check_box :is_admin?,class: 'user-role' %><span class='label-class'>Is Admin?</span>
 					</label>
 				</div>                  
 			</div>
@@ -52,7 +52,7 @@
 			<div class='col-md-6'>
 				<div class="checkbox checkbox-slider--b-flat">
 					<label>
-						<%=f.check_box :is_security_member?,class: 'user-role' %><span class='label-class'>Is Security Team?</span>
+						<%= f.check_box :is_security_member?,class: 'user-role' %><span class='label-class'>Is Security Team?</span>
 					</label>
 				</div>                  
 			</div>

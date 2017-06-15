@@ -65,10 +65,10 @@
 					<li class="<%=current_class?('/analytics')%>"><%=link_to 'Analytics',analytics_path(analytics_type: AppConstants::OwnerTypes::CORPORATE)%></li>
 				<%end%>
 			<%end%>
-			<li class="<%=current_class?('/upload_scans/new')%>"><%=link_to 'ADD TARGET',add_target_scaners_path,method: :get%></li>
+			<li class="<%=current_class?('/scaners/add_target')%>"><%=link_to 'ADD TARGET',add_target_scaners_path,method: :get%></li>
 			<%if current_user.is_admin? || current_user.is_team_lead? || current_user.is_security_member?%>
-				<li> <%=link_to 'Upload Scan',new_upload_scan_path,method: :get%></li>
-			 <%end%>
+				<li class="<%=current_class?('/upload_scans/new')%>"> <%=link_to 'Upload Scan',new_upload_scan_path,method: :get%></li>
+			<%end%>
 			<li class="<%=current_class?(@active_nav_class)%>"> <%=link_to "Scans",scaners_path(owner_type: get_owner_type,scan_type: AppConstants::ScanTypes::STATIC)%></li>
 			<%if !current_user.is_admin? && Setting.application_mode != AppConstants::UserMode::SINGLE_USER %>
 				<li class="<%=current_class?('/filters/apply_filter')%> dropdown">
