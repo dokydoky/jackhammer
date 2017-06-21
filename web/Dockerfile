@@ -77,6 +77,5 @@ ADD app/ /home/app
 WORKDIR /home/app
 #create tmp dir
 RUN mkdir -p tmp/pids
-RUN mkdir -p log/scans
 # expose HTTP
 EXPOSE 3000
