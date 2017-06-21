@@ -19,6 +19,7 @@ services:
     build: ./web
     volumes:
       - '.:/jackhammer'
+      - scan-log:/home/app/log/scans
     ports:
       - "5000:3000"
     command: bundle exec puma -e production -b tcp://0.0.0.0:3000
@@ -31,8 +32,6 @@ services:
       - MYSQL_HOST=mysqldb
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
-    volumes:
-      - scan-log:/home/app/log/scans
     links:
       - mysqldb:mysqldb
       - redis:redis
@@ -43,6 +42,7 @@ services:
     build: ./web
     volumes:
       - '.:/jackhammer'
+      - scan-log:/home/app/log/scans
     command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
       - REDIS_URL=redis://redis:6379
@@ -53,8 +53,6 @@ services:
       - MYSQL_HOST=mysqldb
       - MYSQL_USER=root
       - MYSQL_PASSWORD=root
-    volumes:
-      - scan-log:/home/app/log/scans
     links:
       - mysqldb:mysqldb
       - redis:redis
