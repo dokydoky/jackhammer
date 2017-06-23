@@ -39,7 +39,7 @@ services:
       - mysqldb
       - redis
   worker:
-    build: ./web
+    image: jackhammer_web
     volumes:
       - '.:/jackhammer'
       - scan-log:/home/app/log/scans
@@ -57,8 +57,7 @@ services:
       - mysqldb:mysqldb
       - redis:redis
     depends_on:
-      - mysqldb
-      - redis
+      - web
   redis:
     image: redis
     ports:
