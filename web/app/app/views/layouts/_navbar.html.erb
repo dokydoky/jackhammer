@@ -55,6 +55,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<li><%=link_to "Corporate Analytics".html_safe,analytics_path(analytics_type: AppConstants::OwnerTypes::CORPORATE)%></li>
+						<li><%=link_to "Team Analytics".html_safe, analytics_path(analytics_type: AppConstants::OwnerTypes::TEAM)%></li>
 						<li><%= link_to "Personal Analytics".html_safe, analytics_path(analytics_type: AppConstants::OwnerTypes::PERSONAL)%></li>
 					</ul>
 				</li>
