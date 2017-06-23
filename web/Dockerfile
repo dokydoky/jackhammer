@@ -40,7 +40,7 @@ RUN \
 rm -rf /var/cache/oracle-jdk8-installer
 RUN apt-add-repository ppa:andrei-pozolotin/maven3
 RUN apt-get -y update
-RUN apt-get install maven3
+RUN apt-get install -y --force-yes maven3
 #install PHANTOM_JS
 RUN apt-get -y install libfontconfig
 RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
