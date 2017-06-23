@@ -14,6 +14,15 @@ class AnalyticsController < ApplicationController
 			@conducted_scans = Scaner.corporate_scans_by_status(AppConstants::ScanStatus::COMPLETED)
 			@most_vul_repos = Finding.by_corporate.not_false_positive.repo_not_blank.by_sev([AppConstants::SeverityTypes::CRITICAL,AppConstants::SeverityTypes::HIGH]).top_vul_repos(5)
 			@top_vul = Finding.by_corporate.not_false_positive.by_sev(AppConstants::SeverityTypes::CRITICAL).group_by_description
+		elsif params[:analytics_type] == AppConstants::OwnerTypes::TEAM
+			team_ids = Team.includes(:users).where('users.id': current_user).map {|x| x.id}
+			@severities_count = Finding.by_teams(team_ids).not_false_positive.group_by_severity
+			@new_findings = Finding.by_teams(team_ids).not_false_positive.by_status(AppConstants::FindingStatus::NEW).count
+			@queued_scans = Scaner.team_scans_by_status(AppConstants::ScanStatus::QUEUED, team_ids)
+			@running_scans = Scaner.team_scans_by_status(AppConstants::ScanStatus::SCANNING, team_ids)
+			@conducted_scans = Scaner.team_scans_by_status(AppConstants::ScanStatus::COMPLETED, team_ids)
+			@most_vul_repos = Finding.by_teams(team_ids).not_false_positive.repo_not_blank.by_sev([AppConstants::SeverityTypes::CRITICAL,AppConstants::SeverityTypes::HIGH]).top_vul_repos(5)
+			@top_vul = Finding.by_teams(team_ids).not_false_positive.by_sev(AppConstants::SeverityTypes::CRITICAL).group_by_description
 		else
 			@severities_count = Finding.by_user(user_id).by_not_corporate.not_false_positive.group_by_severity
 			@new_findings = Finding.by_user(user_id).by_not_corporate.by_status(AppConstants::FindingStatus::NEW).count
@@ -25,7 +34,7 @@ class AnalyticsController < ApplicationController
 		end
 		@severity_hash = init_severity_hash
 		@severities_count.each { |sev_finds| @severity_hash[sev_finds.first] = sev_finds.last }
-		calculate_sev_percentge 
+		calculate_sev_percentge
 	end
 	def calculate_sev_percentge
 		total = @severity_hash["Critical"] + @severity_hash["High"] + @severity_hash["Medium"] + @severity_hash["Low"] + @severity_hash["Info"]
@@ -40,7 +49,10 @@ class AnalyticsController < ApplicationController
 	end
 	def get_desc_wise
 		if session[:analytics_type] == AppConstants::OwnerTypes::CORPORATE
-			@findings = Finding.includes(:repo,:scaners).by_description(params[:description]).not_false_positive.by_corporate.by_sev(AppConstants::SeverityTypes::CRITICAL).paginate(:page => params[:page])	
+			@findings = Finding.includes(:repo,:scaners).by_description(params[:description]).not_false_positive.by_corporate.by_sev(AppConstants::SeverityTypes::CRITICAL).paginate(:page => params[:page])
+		elsif session[:analytics_type] == AppConstants::OwnerTypes::TEAM
+			team_ids = Team.includes(:users).where('users.id': current_user).map {|x| x.id}
+			@findings = Finding.by_teams(team_ids).includes(:repo,:scaners).by_description(params[:description]).not_false_positive.by_corporate.by_sev(AppConstants::SeverityTypes::CRITICAL).paginate(:page => params[:page])
 		else
 			@findings = current_user.findings.includes(:repo,:scaners).by_description(params[:description]).not_false_positive.by_not_corporate.by_sev(AppConstants::SeverityTypes::CRITICAL).paginate(:page => params[:page])
 		end

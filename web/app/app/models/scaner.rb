@@ -10,6 +10,7 @@ class Scaner < ActiveRecord::Base
 	validates_attachment_content_type :project_target,content_type: ['application/zip','application/tar','text/xml','application/xml','application/octet-stream']
 
 	scope :corporate_scans_by_status,->(status) { where("scaners.status = ? and team_id is not null",status).count}
+	scope :team_scans_by_status,->(status,team_ids) { where("scaners.status = ? and team_id in (?)",status,team_ids).count}
 	scope :personal_scans_by_status,->(status,user_id) { where("scaners.status = ? and user_id = ?",status,user_id).count}
 	scope :corporate_scans,-> {where("team_id is not null")}
 	scope :team_scans,->(team_ids) {where("team_id is not null and team_id in (?)",team_ids)}
