@@ -45,10 +45,9 @@ class GithubPullInfoWorker
 			end
 
 			(branches_db - branches_github).each do |name|
-				if b = Branch.where(repo: repo, name: name)
-					Branch.delete(b)
-					@logfile.puts "Removed branch: #{name} on #{r[:full_name]}"
-				end
+				branch_ids = Branch.where(repo: repo, name: name).map {|x| x.id}
+				Branch.delete(branch_ids)
+				@logfile.puts "Removed branch: #{name} on #{r[:name]}"
 			end
 		end
 
