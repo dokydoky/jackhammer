@@ -67,6 +67,7 @@ ADD app/Gemfile.lock Gemfile.lock
 ADD bundle.sh bundle.sh
 
 #RUN bundle install
+RUN bash bundle config --global github.https true
 RUN bash bundle.sh
 RUN apt-get install python-pip -y
 RUN pip install -I GitPython==2.1.1

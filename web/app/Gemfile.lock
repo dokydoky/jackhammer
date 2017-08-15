@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/rweng/jquery-datatables-rails.git
+  remote: https://github.com/rweng/jquery-datatables-rails.git
   revision: d486b31b192a2924b1913e080ad23460e6b96d31
   specs:
     jquery-datatables-rails (3.4.0)
@@ -9,7 +9,7 @@ GIT
       sass-rails
 
 GIT
-  remote: git://github.com/sumoheavy/jira-ruby.git
+  remote: https://github.com/sumoheavy/jira-ruby.git
   revision: 90cc2c86cddafb9c84e383fd9da041ec7a6cc261
   specs:
     jira-ruby (1.2.0)
